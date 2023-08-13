@@ -1,13 +1,13 @@
 import Image from 'next/image'
-import styles from './page.module.css'
 import Link from 'next/link'
 
 export default function Home() {
     return (
-        <main className={styles.main}>
-            main page
+        <main>
+            main
+            <Link href={`/projects`} />
 
-            <Link href={'/projects'}>projects</Link>
+            <Image src={`/testimg.png`} width={300} height={300} alt="testimg"/>
         </main>
     )
 }
