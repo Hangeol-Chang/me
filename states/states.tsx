@@ -11,7 +11,7 @@ const relativePrefixState = atom<string>({
     key : 'relativePrefixState',
     default : process.env.NODE_ENV === "production"
         ? `/me`
-        : `/`,
+        : ``,
 })
 
 export {
