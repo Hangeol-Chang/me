@@ -8,7 +8,11 @@ const nextConfig = {
     reactStrictMode: false,
     assetPrefix: !debug ? `${repository}/` : "/", 
     trailingSlash: true,
-  
+    
+    env: {
+        BASE_URL: process.env.BASE_URL,
+    },
+    
     images: {
         loader: 'akamai',
         path: '/',
