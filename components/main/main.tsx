@@ -1,7 +1,5 @@
-import Link from "next/link";
+import Link from "../Common/link";
 import Image from "../Common/image";
-
-
 
 export default function Main() {
     return (

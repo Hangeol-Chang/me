@@ -4,7 +4,7 @@ export default function Image({src, width, height, alt} : {src : string, width :
 
     return (
         <NextImage 
-            src={process.env.PUBLIC_URL + src} 
+            src={process.env.REACT_APP_PUBLIC_URL + src} 
             width={width}
             height={height}
             alt={alt ? alt : "null"}

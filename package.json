@@ -16,6 +16,7 @@
     "@types/react": "^18.2.20",
     "@types/react-dom": "18.2.7",
     "@types/styled-components": "^5.1.26",
+    "cross-env": "^7.0.3",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
     "next": "13.4.13",
