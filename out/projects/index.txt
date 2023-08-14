@@ -1,5 +1,5 @@
 1:HL["https://hangeol-chang.github.io/me/_next/static/css/c66907ec0adb94c2.css",{"as":"style"}]
-0:["AkoRPEajNIgZVlWK_L8td",[[["",{"children":["projects",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"https://hangeol-chang.github.io/me/_next/static/css/c66907ec0adb94c2.css","precedence":"next"}]],"$L3"]]]]
+0:["xkFmYA8AzW4woJgOdkQvf",[[["",{"children":["projects",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"https://hangeol-chang.github.io/me/_next/static/css/c66907ec0adb94c2.css","precedence":"next"}]],"$L3"]]]]
 4:I{"id":6639,"chunks":["691:static/chunks/f4e5f4e1-35de6ab1046bc19e.js","377:static/chunks/377-0171e49c68e504dd.js","185:static/chunks/app/layout-ed8cd716c49b842a.js"],"name":"","async":false}
 5:I{"id":6646,"chunks":["691:static/chunks/f4e5f4e1-35de6ab1046bc19e.js","377:static/chunks/377-0171e49c68e504dd.js","185:static/chunks/app/layout-ed8cd716c49b842a.js"],"name":"","async":false}
 6:I{"id":7767,"chunks":["272:static/chunks/webpack-91857a507a05c888.js","971:static/chunks/fd9d1056-2a82911b7ac5e265.js","596:static/chunks/596-bf2c6753441253cb.js"],"name":"default","async":false}
