@@ -2,15 +2,27 @@
 import {default as NextLink} from "next/link";
 import { useRecoilValue } from "recoil";
 import { relativePrefixState } from "../../states/states";
+import styled from "styled-components";
 
-export default function Link({ children, href} : { children : React.ReactNode, href : string}) {
+interface LinkStyle {
+
+}
+
+export default function Link(
+    { children, href} : 
+    { children : React.ReactNode, href : string}) {
+    
     const relativePrefix = useRecoilValue(relativePrefixState);
 
+    const StyledLink = styled(NextLink)<LinkStyle>`
+        
+    `;
+
     return (
-        <NextLink 
+        <StyledLink
             href={relativePrefix + href}
         >
             {children}
-        </NextLink>
+        </StyledLink>
     )
 }
