@@ -1,7 +1,13 @@
+'use client'
+
+import { useEffect, useState } from "react";
 import Image from "../Common/image";
+import { useSpring, animated } from "react-spring";
+import { useGetRecoilValueInfo_UNSTABLE } from "recoil";
+import { relative } from "path";
 
 const backgroundStyle = {
-    'background-color' : '#cccccc', // use bg-color while testing
+    'backgroundColor' : '#cccccc', // use bg-color while testing
     // 'display' : 'flex',
     // 'position' : 'absolute',
     // 'flex-direction' : 'row',
@@ -11,35 +17,76 @@ const backgroundStyle = {
     'min-height' : '50vh',
 } as React.CSSProperties;
 
-const topImgStyle = {
-    "position" : "absolute",
-    "left" : "50%",
-    "transform" : "translate(-50%, 0%)"
-} as React.CSSProperties;
-
-const leftImgStyle = {
-    'position' : 'absolute',
-    'left' : 0,
-} as React.CSSProperties;
-
-const rightImgStyle = {
-    'position' : 'absolute',
-    'right' : 0,
-} as React.CSSProperties;
-
 export default function Background() {
+    const [mounted, setMounted] = useState<boolean>(false);
+    const [sideImageWidth, ] = useState<number>(300);
+    const [topImageHeight, ] = useState<number>(400);
+
+    const [animationConfig, ] = useState<any>({ 
+        duration: 1500,
+        tension: 180, 
+        friction: 12
+    });
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    // styles
+    const topImgStyle = {
+        "position" : "absolute",
+        "left" : "50%",
+        "transform" : "translate(-50%, 0%)"
+    } as React.CSSProperties;
+    
+    const leftImgStyle = {
+        'position' : 'absolute',
+        'left' : 0,
+    } as React.CSSProperties;
+
+    const rightImgStyle = {
+        'position' : 'absolute',
+        'right' : 0
+    } as React.CSSProperties;
+
+    // animations
+    const topInitAnimation = useSpring({
+        from : {marginTop : -topImageHeight},
+        to : {marginTop : 0},
+        animationConfig,
+        delay : 500
+    })
+
+    const leftInitAnimation = useSpring({
+        from : {marginLeft : -sideImageWidth}, 
+        to : {marginLeft : 0},
+        animationConfig
+    });
+
+    const rightInitAnimation = useSpring({
+        from : {marginRight : -sideImageWidth}, 
+        to : {marginRight : 0},
+        animationConfig
+    });
+
     return (
         <div style={backgroundStyle} >
 
             <div style={topImgStyle} >
-                <Image src={'/main/hall_t.png'} width={1000} height={400} alt="topWall" />
+                <animated.div style={topInitAnimation}>
+                    <Image src={'/main/hall_t.png'} width={1000} height={400} alt="topWall" />
+                </animated.div>
             </div>
 
             <div style={leftImgStyle} >
-                <Image src={'/main/hall_l.png'} width={300} height={1000} alt="leftWall" />
+                <animated.div style={leftInitAnimation} >
+                    <Image src={'/main/hall_l.png'} width={300} height={1000} alt="leftWall" />
+                </animated.div>
             </div>
             <div style={rightImgStyle} >
-                <Image src={'/main/hall_r.png'} width={300} height={1000} alt="rightWall" />
+                <animated.div style={rightInitAnimation}>
+                    <Image src={'/main/hall_r.png'} width={300} height={1000} alt="rightWall" />
+                </animated.div>
             </div>
         </div>
     )
