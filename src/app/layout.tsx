@@ -21,8 +21,8 @@ const bodyStyle = {
     'display' : 'flex',
     'flex-direction' : 'column',
     'justify-content' : 'start',
-    'align-items' : 'center',
-    'padding' : '2vh 4rem 2vh 4rem',
+    // 'align-items' : 'center',
+    // 'padding' : '2vh 4rem 2vh 4rem',
     'min-height' : '50vh',
 } as React.CSSProperties;
 
