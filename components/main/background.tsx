@@ -1,10 +1,9 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import Link from "../Common/link";
 import Image from "../Common/image";
+import { useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
-import { useGetRecoilValueInfo_UNSTABLE } from "recoil";
-import { relative } from "path";
 
 const backgroundStyle = {
     'backgroundColor' : '#cccccc', // use bg-color while testing
@@ -71,7 +70,6 @@ export default function Background() {
 
     return (
         <div style={backgroundStyle} >
-
             <div style={topImgStyle} >
                 <animated.div style={topInitAnimation}>
                     <Image src={'/main/hall_t.png'} width={1000} height={400} alt="topWall" />

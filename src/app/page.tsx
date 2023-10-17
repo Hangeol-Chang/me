@@ -1,13 +1,13 @@
-import Main from '../../components/main/main'
+import Link from '../../components/Common/link'
+import Background from '../../components/main/background'
+import Links from '../../components/main/links'
 
 export default function Home() {
 
     return (
         <main>
-            <div>
-                main
-            </div>
-            <Main />
+            <Links />
+            <Background />
         </main>
     )
 }
