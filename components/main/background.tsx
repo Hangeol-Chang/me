@@ -16,6 +16,19 @@ const backgroundStyle = {
     'min-height' : '50vh',
 } as React.CSSProperties;
 
+function BackgroundImage(
+    {imageStyle, initAnimation, src, width, height, alt} : 
+    {imageStyle : React.CSSProperties, initAnimation : object, src : string, width : number, height : number, alt : string}) {
+
+    return (
+        <div style={imageStyle} >
+            <animated.div style={initAnimation} >
+                <Image src={src} width={width} height={height} alt={alt} />
+            </animated.div>
+        </div>
+    )
+}
+
 export default function Background() {
     const [mounted, setMounted] = useState<boolean>(false);
     const [sideImageWidth, ] = useState<number>(300);
