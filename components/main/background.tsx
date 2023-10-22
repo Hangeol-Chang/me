@@ -30,27 +30,62 @@ function BackgroundImage(
 }
 
 export default function Background() {
-    const [mounted, setMounted] = useState<boolean>(false);
-    const [sideImageWidth, ] = useState<number>(300);
-    const [topImageHeight, ] = useState<number>(400);
+    // const [mounted, setMounted] = useState<boolean>(false);
+
+    // recoil 쪽으로 변수 옮길 것.
+    const [windowWidth,  setWindowWidth]  = useState<number>(window.innerWidth);
+    const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
+
+    const [topimageWidth, setTopimageWidth] = useState<number>(window.innerWidth * 0.5);
+    const [topimageHeight, setTopimageHeight] = useState<number>(400);
+    const [sideimageWidth, setSideimageWidth] = useState<number>(300);
+    const [sideimageHeight, setSideimageHeight] = useState<number>(window.innerHeight);
 
     const [animationConfig, ] = useState<any>({ 
         duration: 1500,
         tension: 180, 
         friction: 12
     });
+    
+    const handleResize = function() {
+        console.log(`화면 사이즈 x : ${window.innerWidth} | y : ${window.innerHeight}`);
+        setWindowWidth(window.innerWidth);
+        setWindowHeight(window.innerHeight);
+    };
+
+    // width에 영향을 받을 
+    useEffect(() => {
+        const widthlimit = 500;
+        let tmpWidth = windowWidth * 0.5 > widthlimit ? widthlimit : windowWidth * 0.5;
+        setTopimageWidth( tmpWidth );
+        setTopimageHeight(tmpWidth * 0.3);
+
+    }, [windowWidth]);
 
     useEffect(() => {
-        setMounted(true);
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
     }, []);
 
     // styles
-    const topImgStyle = {
+    const topMiddleImgStyle = {
         "position" : "absolute",
         "left" : "50%",
         "transform" : "translate(-50%, 0%)"
     } as React.CSSProperties;
+
+    const topRightImgStyle = {
+        "position" : "absolute",
+        "right" : "-10%",
+    } as React.CSSProperties;
     
+    const topLeftImgStyle = {
+        "position" : "absolute",
+        "left" : "-10%",
+    } as React.CSSProperties;
+
     const leftImgStyle = {
         'position' : 'absolute',
         'left' : 0,
@@ -63,42 +98,61 @@ export default function Background() {
 
     // animations
     const topInitAnimation = useSpring({
-        from : {marginTop : -topImageHeight},
+        from : {marginTop : -topimageHeight},
         to : {marginTop : 0},
         animationConfig,
         delay : 500
     })
 
     const leftInitAnimation = useSpring({
-        from : {marginLeft : -sideImageWidth}, 
+        from : {marginLeft : -sideimageWidth}, 
         to : {marginLeft : 0},
         animationConfig
     });
 
     const rightInitAnimation = useSpring({
-        from : {marginRight : -sideImageWidth}, 
+        from : {marginRight : -sideimageWidth}, 
         to : {marginRight : 0},
         animationConfig
     });
 
     return (
         <div style={backgroundStyle} >
-            <div style={topImgStyle} >
-                <animated.div style={topInitAnimation}>
-                    <Image src={'/main/hall_t.png'} width={1000} height={400} alt="topWall" />
-                </animated.div>
-            </div>
 
-            <div style={leftImgStyle} >
-                <animated.div style={leftInitAnimation} >
-                    <Image src={'/main/hall_l.png'} width={300} height={1000} alt="leftWall" />
-                </animated.div>
-            </div>
-            <div style={rightImgStyle} >
-                <animated.div style={rightInitAnimation}>
-                    <Image src={'/main/hall_r.png'} width={300} height={1000} alt="rightWall" />
-                </animated.div>
-            </div>
+            {/* top */}
+            {/* <BackgroundImage 
+                imageStyle={topImgStyle} initAnimation={topInitAnimation} 
+                src={'/main/hall_t.png'} width={1000} height={400} alt={"topWall"} 
+            /> */}
+            <BackgroundImage 
+                imageStyle={topMiddleImgStyle} initAnimation={topInitAnimation} 
+                src={'/main/reference/top_middle.png'} width={topimageWidth} height={topimageHeight} alt={"topWall"} 
+            />
+            <BackgroundImage 
+                imageStyle={topRightImgStyle} initAnimation={topInitAnimation} 
+                src={'/main/reference/top_side.png'} width={topimageWidth} height={topimageHeight} alt={"top_r"} 
+            />
+            <BackgroundImage 
+                imageStyle={topLeftImgStyle} initAnimation={topInitAnimation} 
+                src={'/main/reference/top_side.png'} width={-topimageWidth} height={topimageHeight} alt={"top_l"} 
+            />
+
+
+            {/* left */}
+            <BackgroundImage 
+                imageStyle={leftImgStyle} 
+                initAnimation={leftInitAnimation} 
+                src={'/main/hall_l.png'} 
+                width={300} height={1000} alt={"leftWall"} 
+            />
+
+            {/* right */}
+            <BackgroundImage 
+                imageStyle={rightImgStyle} 
+                initAnimation={rightInitAnimation} 
+                src={'/main/hall_r.png'} 
+                width={300} height={1000} alt={"rightWall"} 
+            />
         </div>
     )
 }
