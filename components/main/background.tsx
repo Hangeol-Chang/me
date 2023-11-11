@@ -228,7 +228,6 @@ export default function Background() {
     } as React.CSSProperties;
 
     
-
     // bottom
 
     // bg
@@ -240,6 +239,43 @@ export default function Background() {
     } as React.CSSProperties;
 
     // animations
+    const makeAnimation = function(tag : string, initPos : number) {
+        let animation = {};
+
+        if(tag == "top") {
+            animation = {
+                from : { marginTop : -initPos},
+                to :   { marginTop : 0 },
+            }
+        }
+        else if (tag == "left") {
+            animation = {
+                from : { marginLeft : -initPos},
+                to :   { marginLeft : 0 },
+            }
+        }
+        else if (tag == "right") {
+            animation = {
+                from : { marginRight : -initPos},
+                to :   { marginRight : 0 },
+            }
+        }
+        else if (tag == "bottom") {
+            animation = {
+                from : { marginBottom : -initPos},
+                to :   { marginBottom : 0 },
+            }
+        }
+
+        return useSpring({
+            ...animation,
+            delay : Math.floor(Math.random() * (2000 - 200)) + 200,
+            duration: 1500,
+            tension: 180, 
+            friction: 12
+        })
+    }
+
     const topInitAnimation = useSpring({
         from : {marginTop : -topimageHeight},
         to : {marginTop : 0},
@@ -272,95 +308,95 @@ export default function Background() {
         {
             'src' : 'bg_top.png', 'sizeData' : 'bg_top',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingMiddleImgStyle,
-            'initAnimation' : topInitAnimation,
+            'initAnimation' : makeAnimation('top', 400),
         }, 
         {
             'src' : 'bg_middle.png', 'sizeData' : 'bg_middle',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : bgMiddleImgStyle,
-            'initAnimation' : topInitAnimation,
+            'initAnimation' : makeAnimation('top', 400),
         },
 
         // left side
         {
             'src' : 'side_wall_left_b.png', 'sizeData' : 'side_wall_b',
             'scaleFactor' : sideHeightConst, 'imageStyle' : leftBImgStyle,
-            'initAnimation' : leftInitAnimation,
+            'initAnimation' : makeAnimation('left', 400),
         }, 
         {
             'src' : 'side_plant_left_b.png', 'sizeData' : 'side_plant_b',
             'scaleFactor' : sideHeightConst, 'imageStyle' : leftPlantBImgStyle,
-            'initAnimation' : leftInitAnimation,
+            'initAnimation' : makeAnimation('left', 900),
         }, 
         {
             'src' : 'side_wall_left_f.png', 'sizeData' : 'side_wall_f',
             'scaleFactor' : sideHeightConst, 'imageStyle' : leftFImgStyle,
-            'initAnimation' : leftInitAnimation,
+            'initAnimation' : makeAnimation('left', 400),
         },
         {
             'src' : 'side_plant_left_f.png', 'sizeData' : 'side_plant_f',
             'scaleFactor' : sideHeightConst, 'imageStyle' : leftPlantFImgStyle,
-            'initAnimation' : leftInitAnimation,
+            'initAnimation' : makeAnimation('left', 400),
         },
 
         // right side
         {
             'src' : 'side_wall_right_b.png', 'sizeData' : 'side_wall_b',
             'scaleFactor' : sideHeightConst, 'imageStyle' : rightBImgStyle,
-            'initAnimation' : rightInitAnimation,
+            'initAnimation' : makeAnimation('right', 400),
         }, 
         {
             'src' : 'side_plant_right_b.png', 'sizeData' : 'side_plant_b',
             'scaleFactor' : sideHeightConst, 'imageStyle' : rightPlantBImgStyle,
-            'initAnimation' : rightInitAnimation,
+            'initAnimation' : makeAnimation('right', 800),
         }, 
         {
             'src' : 'side_wall_right_f.png', 'sizeData' : 'side_wall_f',
             'scaleFactor' : sideHeightConst, 'imageStyle' : rightFImgStyle,
-            'initAnimation' : rightInitAnimation,
+            'initAnimation' : makeAnimation('right', 400),
         }, 
         {
             'src' : 'side_plant_right_f.png', 'sizeData' : 'side_plant_f',
             'scaleFactor' : sideHeightConst, 'imageStyle' : rightPlantFImgStyle,
-            'initAnimation' : rightInitAnimation,
+            'initAnimation' : makeAnimation('right', 400),
         },
 
         // ceiling
         {
             'src' : 'ceiling_right.png', 'sizeData' : 'ceiling_right',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingRightImgStyle,
-            'initAnimation' : topInitAnimation,
+            'initAnimation' : makeAnimation('top', 400),
         }, 
         {
             'src' : 'ceiling_left.png', 'sizeData' : 'ceiling_left',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingLeftImgStyle,
-            'initAnimation' : topInitAnimation,
+            'initAnimation' : makeAnimation('top', 400),
         },
 
         {
             'src' : 'top_light_b.png', 'sizeData' : 'top_light_b',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingRightLightBStyle,
-            'initAnimation' : topInitAnimation,
+            'initAnimation' : makeAnimation('top', 400),
         }, 
         {
             'src' : 'top_light_f.png', 'sizeData' : 'top_light_f',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingRightLightFStyle,
-            'initAnimation' : topInitAnimation,
+            'initAnimation' : makeAnimation('top', 400),
         }, 
         {
             'src' : 'top_light_b.png', 'sizeData' : 'top_light_b', 
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingLeftLightBStyle,
-            'initAnimation' : topInitAnimation,
+            'initAnimation' : makeAnimation('top', 400),
         }, 
         {
             'src' : 'top_light_f.png', 'sizeData' : 'top_light_f',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingLeftLightFStyle, 
-            'initAnimation' : topInitAnimation,
+            'initAnimation' : makeAnimation('top', 400),
         },
 
         {
             'src' : 'ceiling_middle.png', 'sizeData' : 'ceiling_middle',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingMiddleImgStyle,
-            'initAnimation' : topInitAnimation,
+            'initAnimation' : makeAnimation('top', 400),
         },
         
         // floor
