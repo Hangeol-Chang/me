@@ -2,7 +2,7 @@
 
 import Link from "../Common/link";
 import Image from "../Common/image";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { getImageSize } from "next/dist/server/image-optimizer";
 
@@ -49,7 +49,12 @@ function BackgroundImage(
 }
 
 export default function Background() {
-    const imageSizeData = {
+
+    interface sizeDataInterface {
+        [key : string] : {width : number, height : number}
+    }
+
+    const imageSizeData : sizeDataInterface = {
         "bg_middle" :       { "width" : 4700, "height" : 500},
         "bg_top" :          { "width" : 4700, "height" : 800},
         "ceiling_left" :    { "width" : 1050, "height" : 750},
@@ -254,135 +259,125 @@ export default function Background() {
         animationConfig
     });
 
+    type imageType = {
+        src : string,
+        imageStyle : React.CSSProperties,
+        initAnimation : any,
+        sizeData : string,
+        scaleFactor : number
+    }
+
+    const images : Array<imageType> = [
+        // background
+        {
+            'src' : 'bg_top.png', 'sizeData' : 'bg_top',
+            'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingMiddleImgStyle,
+            'initAnimation' : topInitAnimation,
+        }, 
+        {
+            'src' : 'bg_middle.png', 'sizeData' : 'bg_middle',
+            'scaleFactor' : ceilingWidthConst, 'imageStyle' : bgMiddleImgStyle,
+            'initAnimation' : topInitAnimation,
+        },
+
+        // left side
+        {
+            'src' : 'side_wall_left_b.png', 'sizeData' : 'side_wall_b',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : leftBImgStyle,
+            'initAnimation' : leftInitAnimation,
+        }, 
+        {
+            'src' : 'side_plant_left_b.png', 'sizeData' : 'side_plant_b',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : leftPlantBImgStyle,
+            'initAnimation' : leftInitAnimation,
+        }, 
+        {
+            'src' : 'side_wall_left_f.png', 'sizeData' : 'side_wall_f',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : leftFImgStyle,
+            'initAnimation' : leftInitAnimation,
+        },
+        {
+            'src' : 'side_plant_left_f.png', 'sizeData' : 'side_plant_f',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : leftPlantFImgStyle,
+            'initAnimation' : leftInitAnimation,
+        },
+
+        // right side
+        {
+            'src' : 'side_wall_right_b.png', 'sizeData' : 'side_wall_b',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : rightBImgStyle,
+            'initAnimation' : rightInitAnimation,
+        }, 
+        {
+            'src' : 'side_plant_right_b.png', 'sizeData' : 'side_plant_b',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : rightPlantBImgStyle,
+            'initAnimation' : rightInitAnimation,
+        }, 
+        {
+            'src' : 'side_wall_right_f.png', 'sizeData' : 'side_wall_f',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : rightFImgStyle,
+            'initAnimation' : rightInitAnimation,
+        }, 
+        {
+            'src' : 'side_plant_right_f.png', 'sizeData' : 'side_plant_f',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : rightPlantFImgStyle,
+            'initAnimation' : rightInitAnimation,
+        },
+
+        // ceiling
+        {
+            'src' : 'ceiling_right.png', 'sizeData' : 'ceiling_right',
+            'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingRightImgStyle,
+            'initAnimation' : topInitAnimation,
+        }, 
+        {
+            'src' : 'ceiling_left.png', 'sizeData' : 'ceiling_left',
+            'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingLeftImgStyle,
+            'initAnimation' : topInitAnimation,
+        },
+
+        {
+            'src' : 'top_light_b.png', 'sizeData' : 'top_light_b',
+            'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingRightLightBStyle,
+            'initAnimation' : topInitAnimation,
+        }, 
+        {
+            'src' : 'top_light_f.png', 'sizeData' : 'top_light_f',
+            'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingRightLightFStyle,
+            'initAnimation' : topInitAnimation,
+        }, 
+        {
+            'src' : 'top_light_b.png', 'sizeData' : 'top_light_b', 
+            'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingLeftLightBStyle,
+            'initAnimation' : topInitAnimation,
+        }, 
+        {
+            'src' : 'top_light_f.png', 'sizeData' : 'top_light_f',
+            'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingLeftLightFStyle, 
+            'initAnimation' : topInitAnimation,
+        },
+
+        {
+            'src' : 'ceiling_middle.png', 'sizeData' : 'ceiling_middle',
+            'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingMiddleImgStyle,
+            'initAnimation' : topInitAnimation,
+        },
+        
+        // floor
+    ]
+
     return (
         <div style={backgroundStyle} >
-            
-            {/* bg */}
-            <BackgroundImage 
-                imageStyle={ceilingMiddleImgStyle} initAnimation={topInitAnimation} 
-                src={'/main/bg_top.png'}
-                size={imageSizeData.bg_top} scaleFactor={ceilingWidthConst}
-                alt={"top_r"} 
-            />
-            <BackgroundImage 
-                imageStyle={bgMiddleImgStyle} initAnimation={topInitAnimation} 
-                src={'/main/bg_middle.png'}
-                size={imageSizeData.bg_middle} scaleFactor={ceilingWidthConst}
-                alt={"top_r"} 
-            />
-
-            {/* left */}
-            <BackgroundImage 
-                imageStyle={leftBImgStyle} 
-                initAnimation={leftInitAnimation} 
-                src={'/main/side_wall_left_b.png'} 
-                size={imageSizeData.side_wall_b} scaleFactor={sideHeightConst} alt={"leftWall_b"} 
-            />
-            <BackgroundImage 
-                imageStyle={leftPlantBImgStyle} 
-                initAnimation={leftInitAnimation} 
-                src={'/main/side_plant_left_b.png'} 
-                size={imageSizeData.side_plant_b} scaleFactor={sideHeightConst} alt={"leftplant_b"} 
-            />
-
-            <BackgroundImage 
-                imageStyle={leftFImgStyle} 
-                initAnimation={leftInitAnimation} 
-                src={'/main/side_wall_left_f.png'} 
-                size={imageSizeData.side_wall_f} scaleFactor={sideHeightConst} alt={"leftWall_f"} 
-            />
-            <BackgroundImage 
-                imageStyle={leftPlantFImgStyle} 
-                initAnimation={leftInitAnimation} 
-                src={'/main/side_plant_left_f.png'} 
-                size={imageSizeData.side_plant_f} scaleFactor={sideHeightConst} alt={"leftplant_f"} 
-            />
-
-
-            
-            {/* right */}
-            <BackgroundImage 
-                imageStyle={rightBImgStyle} 
-                initAnimation={rightInitAnimation} 
-                src={'/main/side_wall_right_b.png'} 
-                size={imageSizeData.side_wall_b} scaleFactor={sideHeightConst} alt={"rightWall_b"} 
-            />
-            <BackgroundImage 
-                imageStyle={rightPlantBImgStyle} 
-                initAnimation={rightInitAnimation} 
-                src={'/main/side_plant_right_b.png'} 
-                size={imageSizeData.side_plant_b} scaleFactor={sideHeightConst} alt={"leftplant_b"} 
-            />
-
-
-            <BackgroundImage 
-                imageStyle={rightFImgStyle} 
-                initAnimation={rightInitAnimation} 
-                src={'/main/side_wall_right_f.png'} 
-                size={imageSizeData.side_wall_f} scaleFactor={sideHeightConst} alt={"rightWall_f"} 
-            />
-            <BackgroundImage 
-                imageStyle={rightPlantFImgStyle} 
-                initAnimation={rightInitAnimation} 
-                src={'/main/side_plant_right_f.png'} 
-                size={imageSizeData.side_plant_f} scaleFactor={sideHeightConst} alt={"leftplant_f"} 
-            />
-
-            {/* top */}
-            {/* <BackgroundImage 
-                imageStyle={topImgStyle} initAnimation={topInitAnimation} 
-                src={'/main/hall_t.png'} width={1000} height={400} alt={"topWall"} 
-            /> */}
-
-            <BackgroundImage 
-                imageStyle={ceilingRightImgStyle} initAnimation={topInitAnimation} 
-                src={'/main/ceiling_right.png'}
-                size={imageSizeData.ceiling_right} scaleFactor={ceilingWidthConst}
-                alt={"top_r"} 
-            />
-            <BackgroundImage 
-                imageStyle={ceilingLeftImgStyle} initAnimation={topInitAnimation} 
-                src={'/main/ceiling_left.png'}
-                size={imageSizeData.ceiling_left} scaleFactor={ceilingWidthConst}
-                alt={"top_l"} 
-            />
-
-            {/* 조명 */}
-            
-            <BackgroundImage 
-                imageStyle={ceilingRightLightBStyle} initAnimation={topInitAnimation} 
-                src={'/main/top_light_b.png'}
-                size={imageSizeData.top_light_b} scaleFactor={ceilingWidthConst}
-                alt={"top_right_light_b"} 
-            />
-            <BackgroundImage 
-                imageStyle={ceilingRightLightFStyle} initAnimation={topInitAnimation} 
-                src={'/main/top_light_f.png'}
-                size={imageSizeData.top_light_f} scaleFactor={ceilingWidthConst}
-                alt={"top_right_light_f"} 
-            />
-
-            <BackgroundImage 
-                imageStyle={ceilingLeftLightBStyle} initAnimation={topInitAnimation} 
-                src={'/main/top_light_b.png'}
-                size={imageSizeData.top_light_b} scaleFactor={ceilingWidthConst}
-                alt={"top_right_light_b"} 
-            />
-            <BackgroundImage 
-                imageStyle={ceilingLeftLightFStyle} initAnimation={topInitAnimation} 
-                src={'/main/top_light_f.png'}
-                size={imageSizeData.top_light_f} scaleFactor={ceilingWidthConst}
-                alt={"top_right_light_f"} 
-            />
-
-
-            <BackgroundImage 
-                imageStyle={ceilingMiddleImgStyle} initAnimation={topInitAnimation} 
-                src={'/main/ceiling_middle.png'} 
-                size={imageSizeData.ceiling_middle} scaleFactor={ceilingWidthConst}
-                alt={"topWall"} 
-            />
-            
+            {
+                images.map( (image : imageType) => (
+                    <BackgroundImage
+                        imageStyle={image.imageStyle} initAnimation={image.initAnimation} 
+                        src={`/main/${image.src}`}
+                        size={imageSizeData[image.sizeData]} scaleFactor={image.scaleFactor}
+                        alt={image.src} 
+                    />
+                ))
+            }            
         </div>
     )
 }
