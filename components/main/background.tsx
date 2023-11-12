@@ -3,6 +3,8 @@
 import Image from "../Common/image";
 import React, { useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
+import { useRecoilState } from "recoil";
+import { animationInitFlagState } from "../../states/mainStates";
 
 const backgroundStyle = {
     'backgroundColor' : '#EEEEEE', // use bg-color while testing
@@ -73,13 +75,10 @@ export default function Background() {
     const [windowWidth,  setWindowWidth]  = useState<number>(1200);
     const [windowHeight, setWindowHeight] = useState<number>(800);
 
-    const [topimageWidth, setTopimageWidth] = useState<number>(0.05);
-    const [topimageHeight, setTopimageHeight] = useState<number>(0.05);
-    // const [sideimageWidth, setSideimageWidth] = useState<number>(300);
-    // const [sideimageHeight, setSideimageHeight] = useState<number>(window.innerHeight);
-
     const [ceilingWidthConst, setCeilingWidthConst] = useState<number>(0.25);     // 0.09 ~ 0.2727
     const [sideHeightConst, setSideHeightConst] = useState<number>(0.4);        // 0.2285 ~ 04114
+
+    const [animationInitFlag, setAnimationInitFlag] = useRecoilState(animationInitFlagState);
 
     useEffect(() => {
         /*
@@ -116,18 +115,10 @@ export default function Background() {
         setWindowHeight(window.innerHeight);
     };
 
-    // width에 영향을 받을 
-    useEffect(() => {
-        const widthlimit = 500;
-        let tmpWidth = windowWidth * 0.5 > widthlimit ? widthlimit : windowWidth * 0.5;
-        setTopimageWidth( tmpWidth );
-        setTopimageHeight(tmpWidth * 0.3);
-
-    }, [windowWidth]);
-
     useEffect(() => {
         setWindowWidth(window.innerWidth);
         setWindowHeight(window.innerHeight);
+        setAnimationInitFlag(true);
 
         window.addEventListener('resize', handleResize);
         return () => {
@@ -267,28 +258,16 @@ export default function Background() {
         let animation = {};
 
         if(tag == "top") {
-            animation = {
-                from : { marginTop : -initPos},
-                to :   { marginTop : 0 },
-            }
+            animation = { marginTop : animationInitFlag ? 0 : -initPos}
         }
         else if (tag == "left") {
-            animation = {
-                from : { marginLeft : -initPos},
-                to :   { marginLeft : 0 },
-            }
+            animation = { marginLeft : animationInitFlag ? 0 : -initPos}
         }
         else if (tag == "right") {
-            animation = {
-                from : { marginRight : -initPos},
-                to :   { marginRight : 0 },
-            }
+            animation = { marginRight : animationInitFlag ? 0 : -initPos}
         }
         else if (tag == "bottom") {
-            animation = {
-                from : { marginBottom : -initPos},
-                to :   { marginBottom : 0 },
-            }
+            animation = { marginBottom : animationInitFlag ? 0 : -initPos}
         }
 
         return useSpring({
@@ -432,9 +411,9 @@ export default function Background() {
     return (
         <div style={backgroundStyle} >
             {
-                images.map( (image : imageType) => (
+                images.map( (image : imageType, idx) => (
                     <BackgroundImage
-                        key={image.src}
+                        key={image.src + idx}
                         imageStyle={image.imageStyle} initAnimation={image.initAnimation} 
                         src={`/main/${image.src}`}
                         size={imageSizeData[image.sizeData]} scaleFactor={image.scaleFactor}
