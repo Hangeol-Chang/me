@@ -17,14 +17,22 @@ const layoutStyle = {
 } as React.CSSProperties;
 
 const bodyStyle = {
-    'background-color' : '#cccccc', // use bg-color while testing
+    // 'background-color' : '#cccccc', // use bg-color while testing
     'display' : 'flex',
     'flex-direction' : 'column',
     'justify-content' : 'start',
-    'align-items' : 'center',
-    'padding' : '2vh 4rem 2vh 4rem',
+    // 'align-items' : 'center',
+    // 'padding' : '2vh 4rem 2vh 4rem',
     'min-height' : '50vh',
+    'font-family' : 'HakgyoansimGaeulsopungB',
 } as React.CSSProperties;
+
+/*
+    font-family: 'NanumSquareRoundLight';
+    font-family: 'NanumSquareRound';
+    font-family: 'NanumSquareRoundBold';
+    font-family: 'NanumSquareRoundExtraBold';
+*/
 
 export default function RootLayout({ children, }: { children: React.ReactNode }) {
     return (

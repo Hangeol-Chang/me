@@ -40,6 +40,16 @@
   --card-border-rgb: 131, 134, 135;
 }
 
+/*
+  fonts
+*/
+@font-face {
+  font-family: 'HakgyoansimGaeulsopungB';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimGaeulsopungB.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
