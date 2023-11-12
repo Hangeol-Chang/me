@@ -17,7 +17,7 @@ const layoutStyle = {
 } as React.CSSProperties;
 
 const bodyStyle = {
-    'background-color' : '#cccccc', // use bg-color while testing
+    // 'background-color' : '#cccccc', // use bg-color while testing
     'display' : 'flex',
     'flex-direction' : 'column',
     'justify-content' : 'start',

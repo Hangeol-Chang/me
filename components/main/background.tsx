@@ -1,20 +1,18 @@
 'use client'
 
-import Link from "../Common/link";
 import Image from "../Common/image";
 import React, { useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
-import { getImageSize } from "next/dist/server/image-optimizer";
 
 const backgroundStyle = {
-    'backgroundColor' : '#cccccc', // use bg-color while testing
+    'backgroundColor' : '#EEEEEE', // use bg-color while testing
     // 'display' : 'flex',
     // 'position' : 'absolute',
     // 'flex-direction' : 'row',
     // 'justify-content' : 'space-between',
     // 'align-items' : 'center',
     // 'padding' : '2vh 4rem 2vh 4rem',
-    'min-height' : '50vh',
+    // 'min-height' : '50vh',
 } as React.CSSProperties;
 
 /*
@@ -72,16 +70,16 @@ export default function Background() {
     // const [mounted, setMounted] = useState<boolean>(false);
 
     // recoil 쪽으로 변수 옮길 것.
-    const [windowWidth,  setWindowWidth]  = useState<number>(window.innerWidth);
-    const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
+    const [windowWidth,  setWindowWidth]  = useState<number>(1200);
+    const [windowHeight, setWindowHeight] = useState<number>(800);
 
-    const [topimageWidth, setTopimageWidth] = useState<number>(window.innerWidth * 0.5);
-    const [topimageHeight, setTopimageHeight] = useState<number>(400);
-    const [sideimageWidth, setSideimageWidth] = useState<number>(300);
-    const [sideimageHeight, setSideimageHeight] = useState<number>(window.innerHeight);
+    const [topimageWidth, setTopimageWidth] = useState<number>(0.05);
+    const [topimageHeight, setTopimageHeight] = useState<number>(0.05);
+    // const [sideimageWidth, setSideimageWidth] = useState<number>(300);
+    // const [sideimageHeight, setSideimageHeight] = useState<number>(window.innerHeight);
 
-    const [ceilingWidthConst, setCeilingWidthConst] = useState<number>(1);     // 0.09 ~ 0.2727
-    const [sideHeightConst, setSideHeightConst] = useState<number>(1);
+    const [ceilingWidthConst, setCeilingWidthConst] = useState<number>(0.25);     // 0.09 ~ 0.2727
+    const [sideHeightConst, setSideHeightConst] = useState<number>(0.4);        // 0.2285 ~ 04114
 
     useEffect(() => {
         /*
@@ -128,6 +126,9 @@ export default function Background() {
     }, [windowWidth]);
 
     useEffect(() => {
+        setWindowWidth(window.innerWidth);
+        setWindowHeight(window.innerHeight);
+
         window.addEventListener('resize', handleResize);
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -229,6 +230,29 @@ export default function Background() {
 
     
     // bottom
+    const bottomLeftPlantBStyle = {
+        'position' : 'absolute',
+        'left' : (sideHeightConst * 850) - 15 / (ceilingWidthConst * ceilingWidthConst),
+        'bottom' : 100
+    } as React.CSSProperties;
+
+    const bottomLeftPlantFStyle = {
+        'position' : 'absolute',
+        'left' : (sideHeightConst * 500) - 15 / (ceilingWidthConst * ceilingWidthConst),
+        'bottom' : 50
+    } as React.CSSProperties;
+
+    const bottomRightPlantBStyle = {
+        'position' : 'absolute',
+        'right' : (sideHeightConst * 850) - 15 / (ceilingWidthConst * ceilingWidthConst),
+        'bottom' : 100
+    } as React.CSSProperties;
+
+    const bottomRightPlantFStyle = {
+        'position' : 'absolute',
+        'right' : (sideHeightConst * 500) - 15 / (ceilingWidthConst * ceilingWidthConst),
+        'bottom' : 50
+    } as React.CSSProperties;
 
     // bg
     const bgMiddleImgStyle = {
@@ -239,7 +263,7 @@ export default function Background() {
     } as React.CSSProperties;
 
     // animations
-    const makeAnimation = function(tag : string, initPos : number) {
+    const MakeAnimation = function(tag : string, initPos : number) {
         let animation = {};
 
         if(tag == "top") {
@@ -270,30 +294,11 @@ export default function Background() {
         return useSpring({
             ...animation,
             delay : Math.floor(Math.random() * (2000 - 200)) + 200,
-            duration: 1500,
+            duration: 2500,
             tension: 180, 
             friction: 12
         })
     }
-
-    const topInitAnimation = useSpring({
-        from : {marginTop : -topimageHeight},
-        to : {marginTop : 0},
-        animationConfig,
-        delay : 500
-    })
-
-    const leftInitAnimation = useSpring({
-        from : {marginLeft : -sideimageWidth}, 
-        to : {marginLeft : 0},
-        animationConfig
-    });
-
-    const rightInitAnimation = useSpring({
-        from : {marginRight : -sideimageWidth}, 
-        to : {marginRight : 0},
-        animationConfig
-    });
 
     type imageType = {
         src : string,
@@ -308,97 +313,119 @@ export default function Background() {
         {
             'src' : 'bg_top.png', 'sizeData' : 'bg_top',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingMiddleImgStyle,
-            'initAnimation' : makeAnimation('top', 400),
+            'initAnimation' : MakeAnimation('top', 400),
         }, 
         {
             'src' : 'bg_middle.png', 'sizeData' : 'bg_middle',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : bgMiddleImgStyle,
-            'initAnimation' : makeAnimation('top', 400),
+            'initAnimation' : MakeAnimation('top', 400),
         },
 
         // left side
         {
             'src' : 'side_wall_left_b.png', 'sizeData' : 'side_wall_b',
             'scaleFactor' : sideHeightConst, 'imageStyle' : leftBImgStyle,
-            'initAnimation' : makeAnimation('left', 400),
+            'initAnimation' : MakeAnimation('left', 400),
         }, 
         {
             'src' : 'side_plant_left_b.png', 'sizeData' : 'side_plant_b',
             'scaleFactor' : sideHeightConst, 'imageStyle' : leftPlantBImgStyle,
-            'initAnimation' : makeAnimation('left', 900),
+            'initAnimation' : MakeAnimation('left', 900),
         }, 
         {
             'src' : 'side_wall_left_f.png', 'sizeData' : 'side_wall_f',
             'scaleFactor' : sideHeightConst, 'imageStyle' : leftFImgStyle,
-            'initAnimation' : makeAnimation('left', 400),
+            'initAnimation' : MakeAnimation('left', 400),
         },
         {
             'src' : 'side_plant_left_f.png', 'sizeData' : 'side_plant_f',
             'scaleFactor' : sideHeightConst, 'imageStyle' : leftPlantFImgStyle,
-            'initAnimation' : makeAnimation('left', 400),
+            'initAnimation' : MakeAnimation('left', 400),
         },
 
         // right side
         {
             'src' : 'side_wall_right_b.png', 'sizeData' : 'side_wall_b',
             'scaleFactor' : sideHeightConst, 'imageStyle' : rightBImgStyle,
-            'initAnimation' : makeAnimation('right', 400),
+            'initAnimation' : MakeAnimation('right', 400),
         }, 
         {
             'src' : 'side_plant_right_b.png', 'sizeData' : 'side_plant_b',
             'scaleFactor' : sideHeightConst, 'imageStyle' : rightPlantBImgStyle,
-            'initAnimation' : makeAnimation('right', 800),
+            'initAnimation' : MakeAnimation('right', 900),
         }, 
         {
             'src' : 'side_wall_right_f.png', 'sizeData' : 'side_wall_f',
             'scaleFactor' : sideHeightConst, 'imageStyle' : rightFImgStyle,
-            'initAnimation' : makeAnimation('right', 400),
+            'initAnimation' : MakeAnimation('right', 400),
         }, 
         {
             'src' : 'side_plant_right_f.png', 'sizeData' : 'side_plant_f',
             'scaleFactor' : sideHeightConst, 'imageStyle' : rightPlantFImgStyle,
-            'initAnimation' : makeAnimation('right', 400),
+            'initAnimation' : MakeAnimation('right', 400),
         },
 
         // ceiling
         {
             'src' : 'ceiling_right.png', 'sizeData' : 'ceiling_right',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingRightImgStyle,
-            'initAnimation' : makeAnimation('top', 400),
+            'initAnimation' : MakeAnimation('top', 400),
         }, 
         {
             'src' : 'ceiling_left.png', 'sizeData' : 'ceiling_left',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingLeftImgStyle,
-            'initAnimation' : makeAnimation('top', 400),
+            'initAnimation' : MakeAnimation('top', 400),
         },
 
         {
             'src' : 'top_light_b.png', 'sizeData' : 'top_light_b',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingRightLightBStyle,
-            'initAnimation' : makeAnimation('top', 400),
+            'initAnimation' : MakeAnimation('top', 400),
         }, 
         {
             'src' : 'top_light_f.png', 'sizeData' : 'top_light_f',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingRightLightFStyle,
-            'initAnimation' : makeAnimation('top', 400),
+            'initAnimation' : MakeAnimation('top', 400),
         }, 
         {
             'src' : 'top_light_b.png', 'sizeData' : 'top_light_b', 
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingLeftLightBStyle,
-            'initAnimation' : makeAnimation('top', 400),
+            'initAnimation' : MakeAnimation('top', 400),
         }, 
         {
             'src' : 'top_light_f.png', 'sizeData' : 'top_light_f',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingLeftLightFStyle, 
-            'initAnimation' : makeAnimation('top', 400),
+            'initAnimation' : MakeAnimation('top', 400),
         },
 
         {
             'src' : 'ceiling_middle.png', 'sizeData' : 'ceiling_middle',
             'scaleFactor' : ceilingWidthConst, 'imageStyle' : ceilingMiddleImgStyle,
-            'initAnimation' : makeAnimation('top', 400),
+            'initAnimation' : MakeAnimation('top', 400),
+        },
+
+        {
+            'src' : 'floor_plant_left_b.png', 'sizeData' : 'floor_plant_b',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : bottomLeftPlantBStyle,
+            'initAnimation' : MakeAnimation('bottom', 500),
+        },
+        {
+            'src' : 'floor_plant_left_f.png', 'sizeData' : 'floor_plant_f',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : bottomLeftPlantFStyle,
+            'initAnimation' : MakeAnimation('bottom', 500),
         },
         
+        {
+            'src' : 'floor_plant_right_b.png', 'sizeData' : 'floor_plant_b',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : bottomRightPlantBStyle,
+            'initAnimation' : MakeAnimation('bottom', 500),
+        },
+        {
+            'src' : 'floor_plant_right_f.png', 'sizeData' : 'floor_plant_f',
+            'scaleFactor' : sideHeightConst, 'imageStyle' : bottomRightPlantFStyle,
+            'initAnimation' : MakeAnimation('bottom', 500),
+        },
+
         // floor
     ]
 
@@ -407,6 +434,7 @@ export default function Background() {
             {
                 images.map( (image : imageType) => (
                     <BackgroundImage
+                        key={image.src}
                         imageStyle={image.imageStyle} initAnimation={image.initAnimation} 
                         src={`/main/${image.src}`}
                         size={imageSizeData[image.sizeData]} scaleFactor={image.scaleFactor}

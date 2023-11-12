@@ -4,7 +4,7 @@ const linksStyle = {
     'position' : 'absolute',
 
     'right' : '20%',
-    'top' : '500px',
+    'bottom' : '500px',
 
     'display' : 'flex',
     'flexDirection' : 'column',
