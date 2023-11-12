@@ -24,7 +24,15 @@ const bodyStyle = {
     // 'align-items' : 'center',
     // 'padding' : '2vh 4rem 2vh 4rem',
     'min-height' : '50vh',
+    'font-family' : 'HakgyoansimGaeulsopungB',
 } as React.CSSProperties;
+
+/*
+    font-family: 'NanumSquareRoundLight';
+    font-family: 'NanumSquareRound';
+    font-family: 'NanumSquareRoundBold';
+    font-family: 'NanumSquareRoundExtraBold';
+*/
 
 export default function RootLayout({ children, }: { children: React.ReactNode }) {
     return (

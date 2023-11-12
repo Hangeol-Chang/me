@@ -9,7 +9,8 @@ const linksStyle = {
     'display' : 'flex',
     'flexDirection' : 'column',
 
-    'alignItems' : 'end'
+    'alignItems' : 'end',
+    'font-size' : '2.5em',
 
 } as React.CSSProperties;
 
